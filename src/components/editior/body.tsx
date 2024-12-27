@@ -28,26 +28,24 @@ const extensions = [
     ListItem,
 ];
 
-const content = "";
-
 const editorOptions = {
     extensions,
-    content,
+    content: "",
 };
 
 enum Key {
     EMPTY = "",
     SPACE = " ",
-    APOSTROPHE = "`",
+    BACK_TICK = "`",
 }
 
 const Body = React.forwardRef<BodyRef>((_, bodyRef) => {
     const editor = useEditor(editorOptions);
     const decoratorKeyPress = React.useRef(Key.EMPTY);
 
-    const handleStyling = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === Key.APOSTROPHE) {
-            decoratorKeyPress.current = Key.APOSTROPHE;
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === Key.BACK_TICK) {
+            decoratorKeyPress.current = Key.BACK_TICK;
         }
     };
 
@@ -56,14 +54,12 @@ const Body = React.forwardRef<BodyRef>((_, bodyRef) => {
         selector: ({ editor }) => {
             if (!editor) return;
 
-            codeStyling(editor, decoratorKeyPress);
+            handleCodeStyling(editor, decoratorKeyPress);
         },
     });
 
     React.useImperativeHandle(bodyRef, () => ({
-        focusBody() {
-            editor?.commands.focus("start");
-        },
+        focusBody: () => editor?.commands.focus("start"),
     }));
 
     return (
@@ -71,32 +67,32 @@ const Body = React.forwardRef<BodyRef>((_, bodyRef) => {
             <EditorContent
                 editor={editor}
                 className="*:outline-none editor-body leading-relaxed"
-                onKeyDown={handleStyling}
+                onKeyDown={handleKeyDown}
             />
         </>
     );
 });
 
-const codeStyling = (
+const handleCodeStyling = (
     editor: Editor,
     decoratorKeyPress: React.MutableRefObject<Key>
 ) => {
-    if (decoratorKeyPress.current === Key.APOSTROPHE) {
-        decoratorKeyPress.current = Key.EMPTY;
+    if (decoratorKeyPress.current !== Key.BACK_TICK) return;
 
-        // Hello| -> H = 1, textCursor = 6  (according to Tiptap)
-        // Hello| -> H = 0, textCursor = 5  (their indexes)
+    decoratorKeyPress.current = Key.EMPTY;
 
-        // We are looking for -> " `" (i.e SPACE followed by APOSTROPHE)
+    // Hello| -> H = 1, textCursor = 6  (according to Tiptap)
+    // Hello| -> H = 0, textCursor = 5  (their indexes)
 
-        const textCursorIndex = editor.state.selection.to - 1;
-        const spaceBeforeApostrophe =
-            editor.getText().at(textCursorIndex - 2) === Key.SPACE;
+    // We are looking for -> " `" (i.e SPACE followed by BACK_TICK)
 
-        if (spaceBeforeApostrophe) {
-            editor.commands.insertContent(Key.APOSTROPHE);
-            editor.commands.focus(textCursorIndex + 1);
-        }
+    const textCursorIndex = editor.state.selection.to - 1;
+    const spaceBeforeApostrophe =
+        editor.getText().at(textCursorIndex - 2) === Key.SPACE;
+
+    if (spaceBeforeApostrophe) {
+        editor.commands.insertContent(Key.BACK_TICK);
+        editor.commands.focus(textCursorIndex + 1);
     }
 };
 
