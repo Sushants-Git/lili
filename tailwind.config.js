@@ -6,6 +6,7 @@ export default {
         extend: {
             fontFamily: {
                 excalifont: ["Excalifont", "sans-serif"],
+                lexend: ["Lexend", "sans-serif"],
             },
             borderRadius: {
                 lg: "var(--radius)",
@@ -19,6 +20,7 @@ export default {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                "list-gray": "#687076",
                 popover: {
                     DEFAULT: "hsl(var(--popover))",
                     foreground: "hsl(var(--popover-foreground))",

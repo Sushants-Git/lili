@@ -1,3 +1,8 @@
 # lili 
 
-Rick Text Editior + Excalidraw
+Rich Text Editior + Excalidraw
+
+# TODO :
+
+- [ ] Bolding text using `**`
+- [ ] makinga text italic uisng `*`

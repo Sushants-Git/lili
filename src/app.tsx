@@ -18,17 +18,13 @@ function App() {
     };
 
     return (
-        <>
-            <section className="font-excalifont mx-auto max-w-3xl px-6 pb-24 pt-24 text-base/[150%] sm:pb-32 lg:px-10">
-                <h1 className="text-4xl">
-                    <Title handleEnter={handleEnter} ref={titleRef} />
-                </h1>
+        <section className="font-lexend mx-auto max-w-3xl px-6 pb-24 pt-24 text-base/[150%] sm:pb-32 lg:px-10">
+            <h1 className="text-4xl mb-6">
+                <Title handleEnter={handleEnter} ref={titleRef} />
+            </h1>
 
-                <br />
-
-                <Body ref={bodyRef} />
-            </section>
-        </>
+            <Body ref={bodyRef} />
+        </section>
     );
 }
 
