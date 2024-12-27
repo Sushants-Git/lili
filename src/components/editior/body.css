@@ -1,0 +1,19 @@
+.editor-body {
+    ol {
+        @apply list-decimal;
+    }
+
+    ol li,
+    ul li {
+        @apply ml-8;
+    }
+
+    ol li::marker,
+    ul li::marker {
+        @apply text-list-gray;
+    }
+
+    ul {
+        @apply list-disc;
+    }
+}
