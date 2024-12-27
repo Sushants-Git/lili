@@ -6,7 +6,7 @@ import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 
 import React from "react";
 
-import type { TitleProps, TitleRef } from "./title.types";
+import type { TitleProps, TitleRef } from "./types/title.types";
 
 const title = "Untitled";
 
