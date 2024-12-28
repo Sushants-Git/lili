@@ -1,10 +1,10 @@
 import "./app.css";
 import React from "react";
-import Title from "./components/editior/title";
-import Body from "./components/editior/body";
+import Title from "./components/editor/title";
+import Body from "./components/editor/body";
 
-import type { BodyRef } from "./components/editior/body.types";
-import type { TitleRef } from "./components/editior/title.types";
+import type { BodyRef } from "./components/editor/types/body.types";
+import type { TitleRef } from "./components/editor/types/title.types";
 
 function App() {
     const bodyRef = React.useRef<BodyRef>(null);
