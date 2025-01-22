@@ -69,7 +69,18 @@ export function ProseMirrorEditor() {
     );
 
     const handleKeyDown = (s: EditorState, e: KeyboardEvent) => {
-        if (e.key === Key.BACK_TICK) {
+        const keyIsBackTick = e.key === Key.BACK_TICK;
+
+        const nonBreakingSpace = "\u00A0"; // &nbsp;
+        const spaceCharacter = [nonBreakingSpace, Key.SPACE];
+
+        const lastCharacter = s.doc.textContent.at(-1);
+
+        let isPrevCharSpace = lastCharacter
+            ? spaceCharacter.includes(lastCharacter)
+            : false;
+
+        if (keyIsBackTick && isPrevCharSpace) {
             e.preventDefault();
 
             let currentAnchorPos = s.selection.anchor;
@@ -105,7 +116,7 @@ export function ProseMirrorEditor() {
                         "Mod-Shift-z": redo,
                     }),
                 ]}
-                handleKeyPress={(view, event) => {
+                handleKeyDown={(view, event) => {
                     handleKeyDown(view.state, event);
                 }}
                 dispatchTransaction={(tr) => {
